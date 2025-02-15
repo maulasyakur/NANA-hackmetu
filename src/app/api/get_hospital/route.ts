@@ -6,12 +6,12 @@ export async function GET(req: Request) {
     const { provinsi } = await req.json(); // Extract `provinsi` from request body
 
     if (!provinsi) {
-      return NextResponse.json({ error: "provinsi is required" }, { status: 400 });
+      return NextResponse.json({ error: "belediye is required" }, { status: 400 });
     }
 
     // Query database for hospitals in the given province
     const result = await pool.query(
-      `SELECT * FROM tb_rs WHERE provinsi = $1;`,
+      `SELECT * FROM tb_rs WHERE belediye = $1;`,
       [provinsi]
     );
 
