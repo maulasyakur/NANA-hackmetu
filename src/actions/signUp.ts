@@ -1,4 +1,5 @@
-import { number, z } from 'zod'
+import bcrypt from 'bcryptjs';
+import { z } from 'zod'
  
 export const SignupFormSchema = z.object({
     name: z
@@ -60,12 +61,12 @@ export async function signup(state: FormState, formData: FormData) {
       }
     }
    
-    // // 2. Prepare data for insertion into database
-    // const { name, email, password } = validatedFields.data
-    // // e.g. Hash the user's password before storing it
-    // const hashedPassword = await bcrypt.hash(password, 10)
+    // 2. Prepare data for insertion into database
+    const { name, email, password } = validatedFields.data
+    // e.g. Hash the user's password before storing it
+    const hashedPassword = await bcrypt.hash(password, 10)
     
-    // // 3. Insert the user into the database or call an Auth Library's API
+    // 3. Insert the user into the database or call an Auth Library's API
     // const data = await db
     //     .insert(users)
     //     .values({
