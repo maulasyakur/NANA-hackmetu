@@ -3,10 +3,12 @@ import pool from "@/lib/lib";
 
 export async function GET(req: Request) {
   try {
-    const { provinsi } = await req.json(); // Extract `provinsi` from request body
+    // Extract the search params
+    const { searchParams } = new URL(req.url);
+    const provinsi = searchParams.get("provinsi");
 
     if (!provinsi) {
-      return NextResponse.json({ error: "belediye is required" }, { status: 400 });
+      return NextResponse.json({ error: "provinsi is required" }, { status: 400 });
     }
 
     // Query database for hospitals in the given province
