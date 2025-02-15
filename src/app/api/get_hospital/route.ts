@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/lib";
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   try {
     const { provinsi } = await req.json(); // Extract `provinsi` from request body
 
