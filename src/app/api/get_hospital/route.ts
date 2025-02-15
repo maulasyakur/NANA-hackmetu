@@ -5,16 +5,16 @@ export async function GET(req: Request) {
   try {
     // Extract the search params
     const { searchParams } = new URL(req.url);
-    const provinsi = searchParams.get("provinsi");
+    const belediye = searchParams.get("belediye");
 
-    if (!provinsi) {
-      return NextResponse.json({ error: "provinsi is required" }, { status: 400 });
+    if (!belediye) {
+      return NextResponse.json({ error: "belediye is required" }, { status: 400 });
     }
 
     // Query database for hospitals in the given province
     const result = await pool.query(
       `SELECT * FROM tb_rs WHERE belediye = $1;`,
-      [provinsi]
+      [belediye]
     );
 
     return NextResponse.json({ data: result.rows }, { status: 200 });
