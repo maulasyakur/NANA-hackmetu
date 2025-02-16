@@ -1,16 +1,15 @@
 "use client"
 
 import { useActionState } from 'react';
-import { login } from '@/actions/logIn';
-import { redirect } from 'next/navigation';
+import { registerAdmin } from '@/actions/registerAdmin';
 
 export default function Login() {
-    const [state, action, pending] = useActionState(login, undefined)
-    
+    const [state, action, pending] = useActionState(registerAdmin, undefined)
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-black">
             <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-                <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
+                <h1 className="text-2xl font-bold text-center mb-6">Resgister Admin</h1>
                 <form action={action} className="space-y-4">
                     {/* Email */}
                     <div>
@@ -50,9 +49,9 @@ export default function Login() {
                         <button
                             type="submit"
                             disabled={pending}
-                            className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-700"
+                            className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         >
-                            Login
+                            Register
                         </button>
                     </div>
                 </form>
