@@ -1,9 +1,12 @@
 "use server"
 
+import { auth } from '@/lib/firebase'
 import pool from '@/lib/pool'
+// import { createSession } from '@/lib/session'
 import bcrypt from 'bcryptjs'
-import { signIn } from 'next-auth/react'
-import { number, z } from 'zod'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { redirect } from 'next/navigation'
+import { z } from 'zod'
 
 const SignupFormSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
@@ -70,25 +73,19 @@ export async function login(state: FormState, formData: FormData): Promise<{ err
     }
     const userId = result.rows[0].password
 
-    // const res = await signIn("credentials", {
-    //   email,
-    //   password,
-    //   userId,
-    //   redirect: false,
-    // });
-
-    // if (res?.error) {
+    // try{
+    //   signInWithEmailAndPassword(auth, email, password)
+    // } catch (err) {
     //   return {
     //     errors: {
-    //       password: ['Error Signing In'],
+    //       password: ["An error Occured. Please try again."],
     //     },
     //   };
     // }
 
-    // Return success response
     return {
       errors: {
-        password: ['Login success!'],
+        password: [''],
       },
     };
   } catch (err: any) {

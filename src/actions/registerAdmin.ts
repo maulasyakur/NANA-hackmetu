@@ -1,7 +1,9 @@
 "use server"
 
+import { auth } from '@/lib/firebase';
 import pool from '@/lib/pool';
 import bcrypt from 'bcryptjs';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { z } from 'zod';
 
 const SignupFormSchema = z.object({
@@ -17,12 +19,12 @@ const SignupFormSchema = z.object({
 
 type FormState =
   | {
-      errors?: {
-        email?: string[];
-        password?: string[];
-      };
-      message?: string;
-    }
+    errors?: {
+      email?: string[];
+      password?: string[];
+    };
+    message?: string;
+  }
   | undefined;
 
 export async function registerAdmin(state: FormState, formData: FormData) {
@@ -50,6 +52,8 @@ export async function registerAdmin(state: FormState, formData: FormData) {
        VALUES ($1, $2)`,
       [email, hashedPassword]
     );
+
+    // await createUserWithEmailAndPassword(auth, email, password)
 
     // Return success response
     return {
