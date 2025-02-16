@@ -28,13 +28,14 @@ const AppointmentsPage: React.FC = () => {
         async function fetchData() {
             try {
                 const data = await getAppointment()
+                console.log(data)
 
                 const formattedAppointments = data.map((appointment, index) => ({
                     patientName: appointment.nama_lengkap,
                     hospitalName: appointment.nama_rs,
                     sectionName: appointment.nama_poli,
-                    time: appointment.waktu_appointment.toISOString().split('T')[1].slice(0, 5),
-                    date: appointment.waktu_appointment.toISOString().split('T')[0],
+                    time: appointment.hari_praktek,
+                    date: appointment.jam_praktek,
                     queueNumber: `${index + 1}` // You can modify the queue number logic if needed
                 }));
 
@@ -90,6 +91,7 @@ const AppointmentsPage: React.FC = () => {
                 <div className="space-x-6">
                     <a href="/edit_table" className="hover:underline">Edit Table</a>
                     <a href="/appointments" className="hover:underline">Appointments</a>
+                    <a href="https://dev.puspitur.com/nana-ai" className="hover:underline">Book an Appointment</a>
                     <button className="bg-red-500 px-4 py-2 rounded-lg">Logout</button>
                 </div>
             </nav>
