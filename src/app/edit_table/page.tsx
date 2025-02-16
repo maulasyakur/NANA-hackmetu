@@ -1,26 +1,27 @@
 "use client";
 
+import { deleteDataFromTable } from "@/actions/tableEdit";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 interface Hospital {
   id: number;
-  name: string;
+  nama_rs: string;
   kabupaten: string;
   provinsi: string;
 }
 
 interface Section {
   id: number;
-  name: string;
-  hospitalId: number;
+  nama_poli: string;
+  id_rs: number;
 }
 
 interface Doctor {
   id: number;
-  name: string;
-  hospitalId: number;
-  sectionId: number;
+  nama_dokter: string;
+  id_rs: number;
+  id_poli: number;
 }
 
 const AdminPage = () => {
@@ -58,7 +59,8 @@ const AdminPage = () => {
 
   const handleDelete = async (table: string, id: number) => {
     try {
-      await axios.delete(`/api/${table}/${id}`);
+        await deleteDataFromTable(table, id)
+    //   await axios.delete(`/api/${table}/${id}`);
       fetchData();
     } catch (error) {
       console.error("Error deleting record", error);
@@ -69,7 +71,7 @@ const AdminPage = () => {
     <div className="p-8 bg-gray-50 min-h-screen text-black">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Manage SQL Tables</h1>
 
-      {/* Hospitals Table */}
+      
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">Hospitals</h2>
         <table className="w-full border-collapse">
@@ -87,8 +89,8 @@ const AdminPage = () => {
                 <td className="border p-3">
                   <input
                     type="text"
-                    defaultValue={hospital.name}
-                    onBlur={(e) => handleUpdate("hospitals", hospital.id, "name", e.target.value)}
+                    defaultValue={hospital.nama_rs}
+                    onBlur={(e) => handleUpdate("hospitals", hospital.id, "nama_rs", e.target.value)}
                     className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </td>
@@ -122,7 +124,7 @@ const AdminPage = () => {
         </table>
       </div>
 
-      {/* Doctors Table */}
+      
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">Doctors</h2>
         <table className="w-full border-collapse">
@@ -140,33 +142,33 @@ const AdminPage = () => {
                 <td className="border p-3">
                   <input
                     type="text"
-                    defaultValue={doctor.name}
-                    onBlur={(e) => handleUpdate("doctors", doctor.id, "name", e.target.value)}
+                    defaultValue={doctor.nama_dokter}
+                    onBlur={(e) => handleUpdate("doctors", doctor.id, "nama_dokter", e.target.value)}
                     className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </td>
                 <td className="border p-3">
                   <select
-                    defaultValue={doctor.hospitalId}
-                    onChange={(e) => handleUpdate("doctors", doctor.id, "hospitalId", e.target.value)}
+                    defaultValue={doctor.id_rs}
+                    onChange={(e) => handleUpdate("doctors", doctor.id, "id_rs", e.target.value)}
                     className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     {hospitals.map((hospital) => (
                       <option key={hospital.id} value={hospital.id}>
-                        {hospital.name}
+                        {hospital.nama_rs}
                       </option>
                     ))}
                   </select>
                 </td>
                 <td className="border p-3">
                   <select
-                    defaultValue={doctor.sectionId}
-                    onChange={(e) => handleUpdate("doctors", doctor.id, "sectionId", e.target.value)}
+                    defaultValue={doctor.id_poli}
+                    onChange={(e) => handleUpdate("doctors", doctor.id, "id_poli", e.target.value)}
                     className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     {sections.map((section) => (
                       <option key={section.id} value={section.id}>
-                        {section.name}
+                        {section.nama_poli}
                       </option>
                     ))}
                   </select>

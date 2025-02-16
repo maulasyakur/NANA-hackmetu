@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const { name, hospitalId } = await request.json();
-    await pool.query("INSERT INTO sections (name, hospital_id) VALUES ($1, $2)", [name, hospitalId]);
+    await pool.query("INSERT INTO tb_poli (nama_poli, id_rs) VALUES ($1, $2)", [name, hospitalId]);
     return NextResponse.json({ message: "Section added" }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const { id, name, hospitalId } = await request.json();
-    await pool.query("UPDATE sections SET name = $1, hospital_id = $2 WHERE id = $3", [name, hospitalId, id]);
+    await pool.query("UPDATE tb_poli SET nama_poli = $1, id_rs = $2 WHERE id = $3", [name, hospitalId, id]);
     return NextResponse.json({ message: "Section updated" }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
@@ -37,7 +37,7 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const { id } = await request.json();
-    await pool.query("DELETE FROM sections WHERE id = $1", [id]);
+    await pool.query("DELETE FROM tb_poli WHERE id = $1", [id]);
     return NextResponse.json({ message: "Section deleted" }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
